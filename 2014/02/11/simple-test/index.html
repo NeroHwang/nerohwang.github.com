@@ -9,17 +9,10 @@
     
     <meta name="author" content="NeroHwang">
     
-    <meta name="description" content="目录
-
-一、准备工作
-二、在本地搭建静态博客
-三、把博客发到github上
-3.1、在github上建立存放博客的repository
-3.2、将博客推送到github
-
-
-四、其他的一些问题
-本来过年那几天就想把博客写好然后发到github上的，后来发现几个地方还是有点小迷糊，加上过年老是要走亲访">
+    <meta name="description" content="本来过年那几天就想把博客写好然后发到github上的，后来发现几个地方还是有点小迷糊，加上过年老是要走亲访友的，所以就没弄成。
+今天花了两个钟弄明白怎么用hexo在github上发静态blog，就把自己的搭建过程发上来。
+其实个人是不太喜欢静态博客这个东西的。虽然定制性确实很高。
+静态博客默认是没有">
     
     
     
@@ -46,7 +39,7 @@
 			
 			<div id="textlogo">
 				<h1 class="site-name"><a rel="hover" class="hover" href="/" title="NeroHwang">NeroHwang</a></h1>
-				<h2 class="blog-motto"></a></h2>
+				<h2 class="blog-motto"><a rel="wobble-to-bottom-right" class="wobble-to-bottom-right" href="#" title="#">我一直照着别人的方向飞，这一次，我想要用自己的方式飞翔一次</a></h2>
 			</div>
 			<div class="navbar"><a rel="buzz" class="buzz" href="#" title="Menu">
 			</a></div>
@@ -81,27 +74,28 @@
     </p>
   <p class="article-time">
     <time datetime="2014-02-11T12:40:49.000Z" itemprop="datePublished">Feb 11 2014</time>
-    Updated:<time datetime="2014-02-11T16:00:43.000Z" itemprop="dateModified">Feb 12 2014</time>
+    Updated:<time datetime="2014-02-13T05:57:44.000Z" itemprop="dateModified">Feb 13 2014</time>
     
   </p>
 </header>
-	<div id="top" class="article-content">
+	<div class="article-content">
 		
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#top"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#preparation"><span class="toc-number">2.</span> <span class="toc-text">一、准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#local"><span class="toc-number">3.</span> <span class="toc-text">二、在本地搭建静态博客</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#propose"><span class="toc-number">4.</span> <span class="toc-text">三、把博客发到github上</span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#repo"><span class="toc-number">4.1.</span> <span class="toc-text">3.1、在github上建立存放博客的repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#propsegithub"><span class="toc-number">4.2.</span> <span class="toc-text">3.2、将博客推送到github</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#other"><span class="toc-number">5.</span> <span class="toc-text">四、其他的一些问题</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#preparation"><span class="toc-number">1.</span> <span class="toc-text">一、准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#local"><span class="toc-number">2.</span> <span class="toc-text">二、在本地搭建静态博客</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#propose"><span class="toc-number">3.</span> <span class="toc-text">三、把博客发到github上</span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#repo"><span class="toc-number">3.1.</span> <span class="toc-text">3.1、在github上建立存放博客的repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#propsegithub"><span class="toc-number">3.2.</span> <span class="toc-text">3.2、将博客推送到github</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#other"><span class="toc-number">4.</span> <span class="toc-text">四、其他的一些问题</span></a></li></ol>
 		</div>
 		
-
+		<p><div id="top"></div>
 本来过年那几天就想把博客写好然后发到github上的，后来发现几个地方还是有点小迷糊，加上过年老是要走亲访友的，所以就没弄成。<br/>
 今天花了两个钟弄明白怎么用hexo在github上发静态blog，就把自己的搭建过程发上来。<br/>
 其实个人是不太喜欢静态博客这个东西的。虽然定制性确实很高。<br/>
 静态博客默认是没有评论系统的，如果需要的话自己去安装 <a href="http://duoshuo.com/" target="_blank">多说</a> 或者 <a href="http://disqus.com/community/" target="_blank">Disqus</a> 即可，这是我知道的两个比较好用的评论系统。<br/>
-搭建环境使用的系统仍然是Ubuntu。
-<h1 id="preparation">一、准备工作</h1>  <a href="#top">回顶部</a><br/>
+搭建环境使用的系统仍然是Ubuntu。</p>
+<p><h1 id="preparation">一、准备工作</h1>  <a href="#top">回顶部</a><br/>
 因为Hexo是基于node.js开发的博客引擎，所以麻烦先在机子上把 <strong><a href="http://nodejs.org/" target="_blank">node.js</a></strong> 装好。<br/>
-从官网下载压缩包解压以后，进入到解压出来的文件夹中，输入如下命令安装：<br/><figure class="highlight"><figcaption><span>安装node.js</span></figcaption><table><tr><td class="gutter"><pre>1
+从官网下载压缩包解压以后，进入到解压出来的文件夹中，输入如下命令安装：<br/></p>
+<figure class="highlight"><figcaption><span>安装node.js</span></figcaption><table><tr><td class="gutter"><pre>1
 2
 3
 </pre></td><td class="code"><pre>./configure
@@ -109,8 +103,6 @@
 sudo <span class="built_in">make</span> install
 </pre></td></tr></table></figure>
 
-</li>
-</ul>
 <p>然后安装<a href="http://git-scm.com/" target="_blank">git</a>,这个用来在本地通过命令进行版本控制。<br/>
 安装git也可以直接通过命令安装：<br/></p>
 <figure class="highlight"><figcaption><span>安装git</span></figcaption><table><tr><td class="gutter"><pre>1
@@ -203,7 +195,7 @@ git <span class="keyword">push</span> -u origin master
   repository: https://github<span class="preprocessor">.com</span>/你的账户名/你的账户名<span class="preprocessor">.github</span><span class="preprocessor">.com</span><span class="preprocessor">.git</span>
 </pre></td></tr></table></figure>
 
-<p>在这里指定你的博客名称等信息<br/></p>
+<p>如果你要单独更新某篇博文，那么在这个部分的new_post_name:里指定一下更新哪个.md文件的内容<br/></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
@@ -240,6 +232,11 @@ hexo deploy
 	</div>
 		<footer class="article-footer clearfix">
 
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/hexo github/">hexo github</a>
+  </div>
+
 
 
 
@@ -275,7 +272,7 @@ hexo deploy
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#top"><span class="toc-number">1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#preparation"><span class="toc-number">2.</span> <span class="toc-text">一、准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#local"><span class="toc-number">3.</span> <span class="toc-text">二、在本地搭建静态博客</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#propose"><span class="toc-number">4.</span> <span class="toc-text">三、把博客发到github上</span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#repo"><span class="toc-number">4.1.</span> <span class="toc-text">3.1、在github上建立存放博客的repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#propsegithub"><span class="toc-number">4.2.</span> <span class="toc-text">3.2、将博客推送到github</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#other"><span class="toc-number">5.</span> <span class="toc-text">四、其他的一些问题</span></a></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#preparation"><span class="toc-number">1.</span> <span class="toc-text">一、准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#local"><span class="toc-number">2.</span> <span class="toc-text">二、在本地搭建静态博客</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#propose"><span class="toc-number">3.</span> <span class="toc-text">三、把博客发到github上</span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#repo"><span class="toc-number">3.1.</span> <span class="toc-text">3.1、在github上建立存放博客的repository</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#propsegithub"><span class="toc-number">3.2.</span> <span class="toc-text">3.2、将博客推送到github</span></a></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#other"><span class="toc-number">4.</span> <span class="toc-text">四、其他的一些问题</span></a></li></ol>
   </div>
 
 <div id="asidepart">
@@ -294,6 +291,15 @@ hexo deploy
 
 
   
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/hexo github/" title="hexo github">hexo github<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
 
   <div class="rsspart">
 	<a href="null" target="_blank" title="rss">RSS</a>
@@ -307,6 +313,13 @@ hexo deploy
 
 
   
+  <div class="tagcloudlist">
+    <p class="asidetitle">Tag Cloud</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/hexo github/" style="font-size: NaNpx;">hexo github</a>
+    </div>
+  </div>
+
 
 </aside>
 </div>
