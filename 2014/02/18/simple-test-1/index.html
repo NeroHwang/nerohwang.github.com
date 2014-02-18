@@ -73,7 +73,7 @@
     </p>
   <p class="article-time">
     <time datetime="2014-02-18T05:01:39.000Z" itemprop="datePublished">Feb 18 2014</time>
-    Updated:<time datetime="2014-02-18T05:35:05.000Z" itemprop="dateModified">Feb 18 2014</time>
+    Updated:<time datetime="2014-02-18T05:36:59.000Z" itemprop="dateModified">Feb 18 2014</time>
     
   </p>
 </header>
@@ -82,11 +82,11 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#struts-"><span class="toc-number">1.</span> <span class="toc-text">struts文件名和文件位置要确定是正确的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-"><span class="toc-number">2.</span> <span class="toc-text">当你上面的都试过但是发现还是不行的时候</span></a></li></ol>
+		<ol class="toc"></ol>
 		</div>
 		
-		<h1 id="struts-">struts文件名和文件位置要确定是正确的</h1>
-<p><strong>首先</strong>，确定struts配置的文件名是<strong>struts.xml</strong>，不要写成任何其他文件名。<br/>
+		<p><h1> struts文件名和文件位置要确定是正确的</h1>
+<strong>首先</strong>，确定struts配置的文件名是<strong>struts.xml</strong>，不要写成任何其他文件名。<br/>
 <strong>第二</strong>，如果你是在tomcat服务器里面部署web应用，那么struts.xml配置文件所在的文件夹位置应该放在webroot--WEB-INF--classes文件夹里面。<br/>
 其中，Web应用的基本骨架如下：<br/></p>
 <p><WebContent><br/>
@@ -238,8 +238,8 @@
 </pre></td></tr></table></figure>
 
 
-<h1 id="-">当你上面的都试过但是发现还是不行的时候</h1>
-<p>其实当我遇到这个问题的时候，也是不属于上述任何一种。因为这些小细节我是一直都很注意的，小细节不注意，会做很多无用功。<br/>
+<p><h1>当你上面的都试过但是发现还是不行的时候</h1>
+其实当我遇到这个问题的时候，也是不属于上述任何一种。因为这些小细节我是一直都很注意的，小细节不注意，会做很多无用功。<br/>
 <strong>最后我发现自己的问题出在eclipse身上。</strong><br/>
 我用的是ubuntu14.04系统，重装过一次以后，放tomcat的文件夹和工作空间那个文件夹都还在，因为使用的是Eclipse kelper jee的版本，只要在系统上配置好Java runtime就可以解压即用的。<br/>
 eclipse直接读取那个工作空间目录的全部项目，正常。但是在新增tomcat7服务器的时候发现竟然不给装载！然后就用了eclipse默认提供的j2ee服务器，问题应该就出在这里。<br/>
@@ -292,7 +292,7 @@ eclipse直接读取那个工作空间目录的全部项目，正常。但是在�
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#struts-"><span class="toc-number">1.</span> <span class="toc-text">struts文件名和文件位置要确定是正确的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-"><span class="toc-number">2.</span> <span class="toc-text">当你上面的都试过但是发现还是不行的时候</span></a></li></ol>
+  <ol class="toc"></ol>
   </div>
 
 <div id="asidepart">
