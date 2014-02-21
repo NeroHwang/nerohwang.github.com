@@ -73,7 +73,7 @@
     </p>
   <p class="article-time">
     <time datetime="2014-02-21T06:48:15.000Z" itemprop="datePublished">Feb 21 2014</time>
-    Updated:<time datetime="2014-02-21T07:30:02.000Z" itemprop="dateModified">Feb 21 2014</time>
+    Updated:<time datetime="2014-02-21T07:34:29.000Z" itemprop="dateModified">Feb 21 2014</time>
     
   </p>
 </header>
@@ -182,14 +182,22 @@
 49
 50
 51
+52
+53
+54
+55
+56
+57
 </pre></td><td class="code"><pre><span class="preprocessor">#include&lt;stdio.h&gt;</span>
 <span class="preprocessor">#include&lt;stdlib.h&gt;</span>
 <span class="preprocessor">#include&lt;alloca.h&gt;</span>
 <span class="preprocessor">#include&lt;string.h&gt;</span>
+<span class="preprocessor">#include&lt;assert.h&gt;</span>
 <span class="preprocessor">#define CMP(a,b) (a&gt;b)?a:b</span>
 <span class="comment">//Binary Search</span>
 <span class="keyword">int</span> BinSearch(<span class="keyword">int</span> *Arr, <span class="keyword">int</span> num , <span class="keyword">int</span> x)
 {
+    assert(Arr != NULL);
     <span class="keyword">int</span> low,mid,high;
     low = <span class="number">0</span>;
     high = num-<span class="number">1</span>;
@@ -222,6 +230,7 @@
 
     <span class="keyword">char</span> *src = <span class="string">"1234567890987654321"</span>;
     <span class="keyword">char</span> *dest = <span class="built_in">malloc</span>(<span class="built_in">strlen</span>(src)+<span class="number">1</span>);
+    assert(dest != NULL);
 
     <span class="built_in">memcpy</span>(dest,src,<span class="built_in">strlen</span>(src));
     <span class="built_in">printf</span>(<span class="string">"The result of mem copy is %s\n"</span>,dest);
@@ -231,6 +240,9 @@
     <span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>,&amp;x,&amp;y);
     <span class="keyword">int</span> i_bigger = CMP(x,y);
     <span class="built_in">printf</span>(<span class="string">"The bigger one of them is %d\n"</span>,i_bigger);
+
+    <span class="built_in">free</span>(dest);
+    dest = NULL;
     <span class="keyword">return</span> <span class="number">0</span>;
 }
 </pre></td></tr></table></figure>
