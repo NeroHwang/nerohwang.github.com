@@ -111,7 +111,7 @@
     </p>
   <p class="article-time">
     <time datetime="2014-02-27T01:33:10.000Z" itemprop="datePublished">Feb 27 2014</time>
-    Updated:<time datetime="2014-02-27T01:36:53.000Z" itemprop="dateModified">Feb 27 2014</time>
+    Updated:<time datetime="2014-02-27T01:54:21.000Z" itemprop="dateModified">Feb 27 2014</time>
     
   </p>
 </header>
@@ -200,6 +200,10 @@
     <span class="keyword">return</span> i;
 }
 </pre></td></tr></table></figure>
+
+<p>为什么最后输出的内容多了空行而且是八个字符呢？</br>
+首先注意for循环处，最多只能到maxline-2的位置，因为&#39;\n&#39;换行符是要占一个位置的，并且还有结束符号&#39;\0&#39;，所以必须两个位置。</br>
+int getchar();函数从缓冲区里面读取stdin的字符流，最后输入的&#39;\n&#39;自然也会读取到，比如说这里输入hello,最后被录入char[]里面的是：“hello\n\0”。而&#39;\n&#39;算一个字符，&#39;\0&#39;不会被记入总长，所以总长总是要多一个位。</br></p>
   
 	</div>
 		<footer class="article-footer clearfix">
