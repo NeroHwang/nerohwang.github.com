@@ -4,33 +4,52 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>simple test | NeroHwang</title>
+    <title>自己动手写getline函数 | NeroHwang</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="NeroHwang">
     
-    <meta name="description" content="这只是一个简单的测试
-标题测试
-
-一个列表测试
-列表的一个子项
-
-
-无序列表的另一个项
-
-
-有序项目
-有序项目的一个子项，注意保持空格
-
-
-
-
-有序列表中的另一个项
-特别强调
-加重强调
-加重及斜文强调
-反引号框起来的内容标题1
-cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
+    <meta name="description" content="自己动手写getline函数 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+//Nero
+//2014-2-27
+//geline Pr">
     
     
     
@@ -84,15 +103,15 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/02/02/simple-test/" title="simple test" itemprop="url">simple test</a>
+      <a href="/2014/02/27/simple-test-3/" title="自己动手写getline函数" itemprop="url">自己动手写getline函数</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/NeroHwang/nerohwang.github.com.git" title="NeroHwang">NeroHwang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-02-02T03:02:42.000Z" itemprop="datePublished">Feb 2 2014</time>
-    Updated:<time datetime="2014-02-11T12:07:53.000Z" itemprop="dateModified">Feb 11 2014</time>
+    <time datetime="2014-02-27T01:33:10.000Z" itemprop="datePublished">Feb 27 2014</time>
+    Updated:<time datetime="2014-02-27T01:36:53.000Z" itemprop="dateModified">Feb 27 2014</time>
     
   </p>
 </header>
@@ -101,59 +120,101 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#-br-"><span class="toc-number">1.</span> <span class="toc-text">一级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.</span> <span class="toc-text">二级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">四级标题<br/></span></a></li></ol></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#-"><span class="toc-number">1.2.</span> <span class="toc-text"></strong></span></a></li></ol>
+		
 		</div>
 		
-		<p>这只是一个简单的测试</p>
-<p><h2>标题测试</h2></p>
-<ul>
-<li>一个列表测试<ul>
-<li>列表的一个子项<br/></li>
-</ul>
-</li>
-<li>无序列表的另一个项</li>
-</ul>
-<ol>
-<li>有序项目<ul>
-<li>有序项目的一个子项，注意保持空格</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>有序列表中的另一个项
-<em>特别强调</em><br/>
-<strong>加重强调</strong><br/>
-<strong><em>加重及斜文强调</em></strong><br/>
-<code>反引号框起来的内容</code><br/><figure class="highlight"><figcaption><span>标题</span></figcaption><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="built_in">cout</span>&lt;&lt;<span class="string">"Hello world"</span>&lt;&lt;endl;
-</pre></td></tr></table></figure>
+		<figure class="highlight C"><figcaption><span>自己动手写getline函数 </span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+</pre></td><td class="code"><pre><span class="comment">//Nero</span>
+<span class="comment">//2014-2-27</span>
+<span class="comment">//geline Practice in KnR</span>
+<span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<span class="preprocessor">#include&lt;assert.h&gt;</span>
+<span class="preprocessor">#define MAXLINE 10000</span>
 
-</li>
-</ul>
-<h1 id="-br-">一级标题<br/></h1>
-<h2 id="-br-">二级标题<br/></h2>
-<h4 id="-br-">四级标题<br/></h4>
-<p>下面演示一下分割线</p>
-<h2 id="-"><strong><strong><strong><strong><strong><strong><strong><strong><em>**</em></strong></strong></strong></strong></strong></strong></strong></strong></h2>
-<p><blockquote><p>这是一个正常的引用写法</p></blockquote></p>
-<blockquote>
-<p>引用的测试<br/></p>
-<blockquote>
-<p>这是一个引用的嵌套<br/>
-<a href="http://www.baidu.com" target="_blank">这是一个链接的演示，比如说百度</a><br/>
-测试</p>
-</blockquote>
-</blockquote>
+<span class="comment">//getline</span>
+<span class="keyword">int</span> GetLine(<span class="keyword">char</span> line[],<span class="keyword">int</span> maxline);
+
+<span class="keyword">int</span> main(<span class="keyword">void</span>)
+{
+    <span class="built_in">printf</span>(<span class="string">"Input the words you need\n"</span>);
+    <span class="keyword">char</span> line[MAXLINE];
+    <span class="keyword">int</span> len = GetLine(line,MAXLINE);
+    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,line);
+    <span class="built_in">printf</span>(<span class="string">"The length of the input is %d\n"</span>,len);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="keyword">int</span> GetLine(<span class="keyword">char</span> line[],<span class="keyword">int</span> maxline)
+{
+    assert(line != NULL &amp;&amp; maxline &lt;= MAXLINE &amp;&amp; maxline &gt;<span class="number">0</span>);
+    <span class="keyword">char</span> c;
+    <span class="keyword">int</span> i;
+    <span class="comment">//Atention Here.Don't use getchar twice in for loop.</span>
+    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;  maxline-<span class="number">1</span> &amp;&amp; (c=getchar())!= EOF &amp;&amp; c!= <span class="string">'\n'</span>; ++i)
+    {
+        line[i] = c;
+    }
+    <span class="keyword">if</span>(c ==<span class="string">'\n'</span>)
+    {
+        line[i] = c;
+        ++i;
+    }
+    line[i] = <span class="string">'\0'</span>;
+    <span class="keyword">return</span> i;
+}
+</pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/02/02/simple-test/" data-title="simple test | NeroHwang" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/02/27/simple-test-3/" data-title="自己动手写getline函数 | NeroHwang" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -162,14 +223,14 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/02/11/simple-test/" title="用hexo在github上搭建自己的静态博客">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  用hexo在github上搭建自己的静态博客</span>
+
+<div class="next">
+<a href="/2014/02/19/simple-test-2/"  title="找出字符串中出现频率最小的字母，并将其去除">
+ <strong>NEXT:</strong><br/> 
+ <span>找出字符串中出现频率最小的字母，并将其去除
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -183,7 +244,7 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#-br-"><span class="toc-number">1.</span> <span class="toc-text">一级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.</span> <span class="toc-text">二级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">四级标题<br/></span></a></li></ol></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#-"><span class="toc-number">1.2.</span> <span class="toc-text"></strong></span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
