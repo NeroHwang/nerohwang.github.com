@@ -4,33 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>simple test | NeroHwang</title>
+    <title>用mount挂载文件系统 | NeroHwang</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="NeroHwang">
     
-    <meta name="description" content="这只是一个简单的测试
-标题测试
-
-一个列表测试
-列表的一个子项
-
-
-无序列表的另一个项
-
-
-有序项目
-有序项目的一个子项，注意保持空格
-
-
-
-
-有序列表中的另一个项
-特别强调
-加重强调
-加重及斜文强调
-反引号框起来的内容标题1
-cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
+    <meta name="description" content="现在手头用的是ubuntu14.04的daily build版本，桌面环境用的是kde。因为在安装ubuntu之前笔记本用的是win7系统，所以有三个分区是分成NTFS格式的。
+使用ubuntu之后，几乎就没再用过windows，不过偶尔还是会开来玩游戏- -
+我发现kubuntu默认的文件管理器D">
     
     
     
@@ -84,15 +65,15 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/02/02/simple-test/" title="simple test" itemprop="url">simple test</a>
+      <a href="/2014/02/27/simple-test-5/" title="用mount挂载文件系统" itemprop="url">用mount挂载文件系统</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/NeroHwang/nerohwang.github.com.git" title="NeroHwang">NeroHwang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-02-02T03:02:42.000Z" itemprop="datePublished">Feb 2 2014</time>
-    Updated:<time datetime="2014-02-11T12:07:53.000Z" itemprop="dateModified">Feb 11 2014</time>
+    <time datetime="2014-02-27T10:20:03.000Z" itemprop="datePublished">Feb 27 2014</time>
+    Updated:<time datetime="2014-02-27T10:40:21.000Z" itemprop="dateModified">Feb 27 2014</time>
     
   </p>
 </header>
@@ -101,59 +82,63 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#-br-"><span class="toc-number">1.</span> <span class="toc-text">一级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.</span> <span class="toc-text">二级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">四级标题<br/></span></a></li></ol></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#-"><span class="toc-number">1.2.</span> <span class="toc-text"></strong></span></a></li></ol>
+		
 		</div>
 		
-		<p>这只是一个简单的测试</p>
-<p><h2>标题测试</h2></p>
-<ul>
-<li>一个列表测试<ul>
-<li>列表的一个子项<br/></li>
-</ul>
-</li>
-<li>无序列表的另一个项</li>
-</ul>
-<ol>
-<li>有序项目<ul>
-<li>有序项目的一个子项，注意保持空格</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>有序列表中的另一个项
-<em>特别强调</em><br/>
-<strong>加重强调</strong><br/>
-<strong><em>加重及斜文强调</em></strong><br/>
-<code>反引号框起来的内容</code><br/><figure class="highlight"><figcaption><span>标题</span></figcaption><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="built_in">cout</span>&lt;&lt;<span class="string">"Hello world"</span>&lt;&lt;endl;
+		<p>现在手头用的是ubuntu14.04的daily build版本，桌面环境用的是kde。因为在安装ubuntu之前笔记本用的是win7系统，所以有三个分区是分成NTFS格式的。</br>
+使用ubuntu之后，几乎就没再用过windows，不过偶尔还是会开来玩游戏- -</br>
+我发现kubuntu默认的文件管理器Dolphin它是在点击NTFS分区之后才进行加载的，如果没有先单独打开过该分区，直接用右键点选“在新标签中打开”的话，Dolphin是不会显示这个分区里内容的。</br>
+而且注意看了下，Dolphin是将那些分区加载到/media/userName/NTFS_Name这样的形式的目录下的。</br>
+下面作一些简单的示例。这些方法用到加载U盘也是一样的。</br>
+首先，我们用fdisk -l命令查看一下现在系统磁盘的分区情况：</br></p>
+<figure class="highlight"><figcaption><span>fdisk命令</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+</pre></td><td class="code"><pre><span class="comment">//-l选项，列出指定设备的分区信息</span>
+<span class="comment">//如果未指定，默认列出/proc/partitions（如果存在）的信息</span>
+fdisk <span class="attribute">-l</span>      
 </pre></td></tr></table></figure>
 
-</li>
-</ul>
-<h1 id="-br-">一级标题<br/></h1>
-<h2 id="-br-">二级标题<br/></h2>
-<h4 id="-br-">四级标题<br/></h4>
-<p>下面演示一下分割线</p>
-<h2 id="-"><strong><strong><strong><strong><strong><strong><strong><strong><em>**</em></strong></strong></strong></strong></strong></strong></strong></strong></h2>
-<p><blockquote><p>这是一个正常的引用写法</p></blockquote></p>
-<blockquote>
-<p>引用的测试<br/></p>
-<blockquote>
-<p>这是一个引用的嵌套<br/>
-<a href="http://www.baidu.com" target="_blank">这是一个链接的演示，比如说百度</a><br/>
-测试</p>
-</blockquote>
-</blockquote>
+<p><img src="\img\mount1.png" alt="分区信息">
+上面可以看到分区信息。</br>
+比如现在我们想要挂载设备sda2，那么可以用如下方式进行挂载：</p>
+<figure class="highlight"><figcaption><span>mount命令</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="comment">//下列操作需要拥有管理员权限</span>
+<span class="comment">//挂载语法：mount -t type device dir</span>
+mkdir /mnt/app
+mount <span class="attribute">-t</span> ntfs /dev/sda2 /mnt/app
+</pre></td></tr></table></figure>
+
+<p>接着我们看看是否成功挂载：</p>
+<figure class="highlight"><figcaption><span>列出文件信息</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="keyword">ls</span> /mnt/app
+</pre></td></tr></table></figure>
+
+<p><img src="\img\mount2.png" alt="挂载结果">
+使用完毕后，取消挂载这个文件系统：</p>
+<figure class="highlight"><figcaption><span>取消挂载umount</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>umount /mnt/app
+<span class="comment">//不需要了可以删除 rm -r /mnt/app</span>
+</pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Linux/">Linux</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/02/02/simple-test/" data-title="simple test | NeroHwang" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/02/27/simple-test-5/" data-title="用mount挂载文件系统 | NeroHwang" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -162,14 +147,14 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/02/11/simple-test/" title="用hexo在github上搭建自己的静态博客">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  用hexo在github上搭建自己的静态博客</span>
+
+<div class="next">
+<a href="/2014/02/27/simple-test-4/"  title="把较长的输入行折叠成若干个较短的行">
+ <strong>NEXT:</strong><br/> 
+ <span>把较长的输入行折叠成若干个较短的行
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -183,7 +168,7 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#-br-"><span class="toc-number">1.</span> <span class="toc-text">一级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.</span> <span class="toc-text">二级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">四级标题<br/></span></a></li></ol></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#-"><span class="toc-number">1.2.</span> <span class="toc-text"></strong></span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
