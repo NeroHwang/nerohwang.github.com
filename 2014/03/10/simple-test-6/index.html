@@ -4,35 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>把较长的输入行折叠成若干个较短的行 | NeroHwang</title>
+    <title>2014年2月20日嵌入式C面试小记 | NeroHwang</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="NeroHwang">
     
-    <meta name="description" content="接前面练习的getline函数。设法将一个较长的输入行——这里的长度限制我们自己设定，比如说一行里面最多只可以有10个字符，我们就设限制为10即可，超过10则折叠该行。
-输入流折叠 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23">
+    <meta name="description" content="总的来说比较惨吧，像写二分搜索，明明是简单地掉渣的搜索算法，但是让我用笔和纸纯写出来的时候，竟然写得各种垃圾，竟然写成了递归的过程！实在是巨大的打击。
+而且还被怀疑发到博客园的代码是不是自己写的，唉，人生的悲剧，如果不是原创的代码我会注明出处的
+考的内容还是比较全面的，加上是嵌入式开发，所以也问到v">
     
     
     
@@ -86,15 +65,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/02/27/simple-test-4/" title="把较长的输入行折叠成若干个较短的行" itemprop="url">把较长的输入行折叠成若干个较短的行</a>
+      <a href="/2014/03/10/simple-test-6/" title="2014年2月20日嵌入式C面试小记" itemprop="url">2014年2月20日嵌入式C面试小记</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/NeroHwang/nerohwang.github.com.git" title="NeroHwang">NeroHwang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-02-27T02:50:53.000Z" itemprop="datePublished">Feb 27 2014</time>
-    Updated:<time datetime="2014-02-27T02:57:11.000Z" itemprop="dateModified">Feb 27 2014</time>
+    <time datetime="2014-03-10T03:06:15.000Z" itemprop="datePublished">Mar 10 2014</time>
+    Updated:<time datetime="2014-03-10T15:06:52.000Z" itemprop="dateModified">Mar 10 2014</time>
     
   </p>
 </header>
@@ -103,11 +82,56 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		
+		<ol class="toc"></ol>
 		</div>
 		
-		<p>接前面练习的getline函数。设法将一个较长的输入行——这里的长度限制我们自己设定，比如说一行里面最多只可以有10个字符，我们就设限制为10即可，超过10则折叠该行。</br></p>
-<figure class="highlight C"><figcaption><span>输入流折叠 </span></figcaption><table><tr><td class="gutter"><pre>1
+		<p>总的来说比较惨吧，像写二分搜索，明明是简单地掉渣的搜索算法，但是让我用笔和纸纯写出来的时候，竟然写得各种垃圾，竟然写成了递归的过程！实在是巨大的打击。<br/>
+而且还被怀疑发到博客园的代码是不是自己写的，唉，人生的悲剧，如果不是原创的代码我会注明出处的<br/>
+考的内容还是比较全面的，加上是嵌入式开发，所以也问到volatile关键字的使用问题，这个关键字应该是很能区分C程序员和嵌入式程序员的了，因为嵌入式的开发人员经常跟中断打交道，所以这个关键字都不知道，八成结果就是呵呵了。<br/>
+下面不分类地回忆并弥补一下面试中回答地比较不好的内容：<br/></p>
+<p><h1>1,volatile：</h1>
+用这个关键字声明一个变量的时候，意思是这个变量可能会被无意改动。用volatile关键字声明某个变量，处理器在读取这个变量的时候，不会从寄存器中读原来的数据，而是重新确认这个值是否已经改变之后，读取最新的值。<br/>
+比如说，：</p>
+<figure class="highlight"><figcaption><span>示例</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre><span class="keyword">int</span> square(volatile <span class="keyword">int</span> <span class="variable">*ptr</span>)
+{
+    <span class="keyword">return</span> <span class="variable">*ptr</span> * <span class="variable">*ptr</span>;
+}
+</pre></td></tr></table></figure>
+
+<p>乍一看好像没什么问题，但是你一定要注意，由于ptr指向的是一个被volatile声明过的变量，所以编译器在编译的时候实际产生的是类似如下形式的代码：<br/></p>
+<figure class="highlight"><figcaption><span>实际上</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+</pre></td><td class="code"><pre><span class="keyword">int</span> square(volatile <span class="keyword">int</span> <span class="variable">*ptr</span>)
+{
+     <span class="keyword">int</span> a,b;
+     a = <span class="variable">*ptr</span>;
+     b = <span class="variable">*ptr</span>;
+     <span class="keyword">return</span> a * b;}
+}
+</pre></td></tr></table></figure>
+
+<p>所以，清楚了吗，这个函数返还的并不一定是平方值，不要搞错了。<br/></p>
+<p><h1>2, C++里面，类的多态是怎么实现的。（注意，是底层实现机制）</h1></p>
+<p><h1>3，写个宏定义判断两个数的大小</h1>
+因为平时几乎不写宏定义，所以虽然有思路，但是不敢确定是不是百分百对，其实跟函数没什么区别，唉，说多了都是泪，当时就这么想的，没敢下笔<br/></p>
+<figure class="highlight"><figcaption><span>宏定义</span></figcaption><table><tr><td class="gutter"><pre>1
+</pre></td><td class="code"><pre><span class="preprocessor">#<span class="keyword">define</span> CMP(a,b) (a&gt;b)?a:b</span>
+</pre></td></tr></table></figure>
+
+<p><h1>4,字符串拷贝函数</h1>
+经典中的经典，很容易从这个函数的书写当中看出一个程序员的代码风格，不要写得太放浪，小心点，很容易出人命。可能博客园上发的那篇博客写得比较严谨，有编译器有帮助文档嘛，写得自然会好。面试的时候用笔写就比较不注意，所以被怀疑了那些代码是不是自己写的，唉，当时想死的心都有了。<br/></p>
+<p><h1>5,二分查找</h1>
+曾经我也以为这些东西是简单到不能在简单的，但是当要求你纯粹用笔，写在纸上，而且必须要写出可以运行的代码的时候，你就会发现，咦，还是有点心理压力的。毕竟我们都习惯了帮助文档和搭建好的编译环境，当这些都没有的时候，就只能呵呵了。<br/></p>
+<figure class="highlight"><figcaption><span>BinSearch Demo</span></figcaption><table><tr><td class="gutter"><pre>1
 2
 3
 4
@@ -164,92 +188,79 @@
 55
 56
 57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-</pre></td><td class="code"><pre><span class="comment">//NeroHwang</span>
-<span class="comment">//2014-2-27</span>
-
-<span class="preprocessor">#include &lt;stdio.h&gt;</span>
+</pre></td><td class="code"><pre><span class="preprocessor">#include&lt;stdio.h&gt;</span>
+<span class="preprocessor">#include&lt;stdlib.h&gt;</span>
+<span class="preprocessor">#include&lt;alloca.h&gt;</span>
+<span class="preprocessor">#include&lt;string.h&gt;</span>
 <span class="preprocessor">#include&lt;assert.h&gt;</span>
-<span class="preprocessor">#define MAXLINE 1000</span>
-<span class="keyword">const</span> <span class="keyword">int</span> MAXFOLD = <span class="number">10</span>; <span class="comment">//Limit the max fold pos as 10</span>
-<span class="keyword">int</span> GetLine(<span class="keyword">char</span> line[],<span class="keyword">int</span> maxline);
-
-<span class="keyword">int</span> main(<span class="keyword">void</span>)
+<span class="preprocessor">#define CMP(a,b) (a&gt;b)?a:b</span>
+<span class="comment">//Binary Search</span>
+<span class="keyword">int</span> BinSearch(<span class="keyword">int</span> *Arr, <span class="keyword">int</span> num , <span class="keyword">int</span> x)
 {
-    <span class="comment">//1,i_current,indicate the current index of the whole string.</span>
-    <span class="comment">//2,i_location,indicate the current pos in a line</span>
-    <span class="keyword">int</span> i_current,i_location;
-    <span class="keyword">int</span> len;
-    <span class="keyword">int</span> i_spaceHolder;       <span class="comment">//Hold for the current pos which is a blank' '</span>
-    <span class="keyword">char</span> line[MAXLINE];
-    <span class="keyword">if</span>((len = GetLine(line,MAXLINE)) &gt;<span class="number">0</span>)
+    assert(Arr != NULL);
+    <span class="keyword">int</span> low,mid,high;
+    low = <span class="number">0</span>;
+    high = num-<span class="number">1</span>;
+    <span class="keyword">while</span>(low &lt;= high)
     {
-        <span class="keyword">if</span>(len &lt; MAXFOLD)
+        mid = (low+high)/<span class="number">2</span>;
+        <span class="keyword">if</span>(x &lt; Arr[mid])
         {
-            <span class="comment">//do nothing</span>
+            high = mid -<span class="number">1</span>;
+        }
+        <span class="keyword">else</span> <span class="keyword">if</span>(x &gt; Arr[mid])
+        {
+            low = mid +<span class="number">1</span>;
         }
         <span class="keyword">else</span>
         {
-            <span class="comment">//there is some extra long lines</span>
-            i_current = <span class="number">0</span>;
-            i_location = <span class="number">0</span>;
-            <span class="keyword">while</span>(i_current &lt; len)
-            {
-                <span class="keyword">if</span>(line[i_current] == <span class="string">' '</span>)
-                {
-                    i_spaceHolder = i_current;
-                }
-                <span class="keyword">if</span>(i_location == MAXFOLD)      <span class="comment">//As soon as we find the pos needs to be folded...</span>
-                {
-                    line[i_spaceHolder] = <span class="string">'\n'</span>;
-                    i_location = <span class="number">0</span>;          <span class="comment">//Reposition</span>
-                }
-                ++i_current;
-                ++i_location;
-            }
+            <span class="keyword">return</span> mid;
         }
-        <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,line);
     }
-    <span class="keyword">return</span> <span class="number">0</span>;
+    <span class="keyword">return</span> -<span class="number">1</span>;
 }
 
-<span class="keyword">int</span> GetLine(<span class="keyword">char</span> line[],<span class="keyword">int</span> maxline)
+<span class="keyword">int</span> main(<span class="keyword">void</span>)
 {
-    assert(line != NULL &amp;&amp; maxline &lt;= MAXLINE &amp;&amp; maxline &gt;<span class="number">0</span>);
-    <span class="keyword">char</span> c;
-    <span class="keyword">int</span> i;
-    <span class="comment">//Atention Here.Don't use getchar twice in for loop.</span>
-    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;  maxline-<span class="number">1</span> &amp;&amp; (c=getchar())!= EOF &amp;&amp; c!= <span class="string">'\n'</span>; ++i)
-    {
-        line[i] = c;
-    }
-    <span class="keyword">if</span>(c ==<span class="string">'\n'</span>)
-    {
-        line[i] = c;
-        ++i;
-    }
-    line[i] = <span class="string">'\0'</span>;
-    <span class="keyword">return</span> i;
+    <span class="keyword">int</span> Arr[]={<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>};
+    <span class="keyword">int</span> i_numToBeSearched=<span class="number">7</span>;
+    <span class="keyword">int</span> location = BinSearch(Arr,<span class="number">10</span>,i_numToBeSearched);
+    <span class="built_in">printf</span>(<span class="string">"The location of the num is %d\n"</span>,location);
+
+
+    <span class="keyword">char</span> *src = <span class="string">"1234567890987654321"</span>;
+    <span class="keyword">char</span> *dest = <span class="built_in">malloc</span>(<span class="built_in">strlen</span>(src)+<span class="number">1</span>);
+    assert(dest != NULL);
+
+    <span class="built_in">memcpy</span>(dest,src,<span class="built_in">strlen</span>(src));
+    <span class="built_in">printf</span>(<span class="string">"The result of mem copy is %s\n"</span>,dest);
+
+    <span class="keyword">int</span> x,y;
+    <span class="built_in">printf</span>(<span class="string">"Please enter the nums you wanna compare\n"</span>);
+    <span class="built_in">scanf</span>(<span class="string">"%d,%d"</span>,&amp;x,&amp;y);
+    <span class="keyword">int</span> i_bigger = CMP(x,y);
+    <span class="built_in">printf</span>(<span class="string">"The bigger one of them is %d\n"</span>,i_bigger);
+
+    <span class="built_in">free</span>(dest);
+    dest = NULL;
+    <span class="keyword">return</span> <span class="number">0</span>;
 }
 </pre></td></tr></table></figure>
 
-<p>测试结果如下:</br>
-<img src="/img/20140227.png" alt="测试结果"></p>
+
+<p><h1>其他</h1>
+像现在这段时间，面试的黄金季节，要自己多做准备才行，要知道自己投递的那个公司的那个职位大概是搞什么的。比如说想去腾讯，那肯定是少不了海量数据的处理，SQL的优化策略等等，所以可以去恶补一下相关的知识，因为平时的环境肯定不会让你注意到这些问题的，你只能自己人为地去测试，如果还只是大一大二，那就赶紧去玩ACM，ACM的题目都是很注重运算效率和占用空间大小的，如果ACM能玩得好，以后这些面试时的小细节不用人说自己都会很注意。<br/>
+如果是想去搞ERP的公司，除了Java基础要牢固和扎实之外，还要多多少少会一点前端设计的知识，包括像js，写ajax之类的，因为这些东西要和后台交互，前后台没可能完全可以分开学的，jsp基础要好，要会用SSH，最好能自己做几个Demo出来，或者干脆做一个功能模块没那么多但是有一个完整功能的系统出来，比如单做某个ERP里面的进销存系统，即可。<br/>
+现在的互联网公司都很燥进，因为这个行业的竞争就是那么大，所以招的学生肯定都是希望在相关的方面有实习经验，要注意，是相关的。如果你实习的时候是去搞php后台开发的，你去找C、C++、Obj-C或者J2EE开发的工作，竞争力就没那些实习的时候就搞这些东西的人大。<br/>
+如果是想搞运维的，不仅Linux要玩得好，shell，python等常用脚本写得溜，还要有一些如C语言的编程基础，Linux玩得好不是桌面系统玩得好，是在console状态下能完全用命令行配出一个安全可用的系统来。现在其实很多企业都想招比较有料的Linux运维人员，不过大学的时候就专注用Linux的确实不多，其实，windows系统真的做得跟翔一样，尽早投入Linux阵营较好。<br/>
+如果你大学四年真的什么都没学，那就去考公务员吧，或者去做销售。公务员考的都是初高中水平的东西，而且不要求工作经验，做销售也没有门槛。做什么事情都要付出代价，在你开始觉得玩四年大学的时候，就应该知道，总有这一天生活会玩死你。<br/></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/C/">C</a>
+  <span></span> <a href="/tags/C/">C</a><a href="/tags/面试/">面试</a>
   </div>
 
 
@@ -257,7 +268,7 @@
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/02/27/simple-test-4/" data-title="把较长的输入行折叠成若干个较短的行 | NeroHwang" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/03/10/simple-test-6/" data-title="2014年2月20日嵌入式C面试小记 | NeroHwang" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -266,19 +277,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/02/27/simple-test-5/" title="用mount挂载文件系统">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  用mount挂载文件系统</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/02/27/simple-test-3/"  title="自己动手写getline函数">
+<a href="/2014/02/27/simple-test-5/"  title="用mount挂载文件系统">
  <strong>NEXT:</strong><br/> 
- <span>自己动手写getline函数
+ <span>用mount挂载文件系统
 </span>
 </a>
 </div>
@@ -295,7 +298,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  
+  <ol class="toc"></ol>
   </div>
 
 <div id="asidepart">
