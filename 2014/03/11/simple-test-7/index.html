@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>自己动手写getline函数 | NeroHwang</title>
+    <title>tmpnam临时文件读写操作 | NeroHwang</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="NeroHwang">
     
-    <meta name="description" content="自己动手写getline函数 1
+    <meta name="description" content="tmpnam函数，创建一个临时文件。
+编译器已经不建议使用该函数，而是使用mkstemp。
+1
 2
 3
 4
@@ -42,14 +44,7 @@
 31
 32
 33
-34
-35
-36
-37
-38
-//Nero
-//2014-2-27
-//geline Pr">
+#include&lt;st">
     
     
     
@@ -103,15 +98,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/02/27/simple-test-3/" title="自己动手写getline函数" itemprop="url">自己动手写getline函数</a>
+      <a href="/2014/03/11/simple-test-7/" title="tmpnam临时文件读写操作" itemprop="url">tmpnam临时文件读写操作</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/NeroHwang/nerohwang.github.com.git" title="NeroHwang">NeroHwang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-02-27T01:33:10.000Z" itemprop="datePublished">Feb 27 2014</time>
-    Updated:<time datetime="2014-02-27T01:54:21.000Z" itemprop="dateModified">Feb 27 2014</time>
+    <time datetime="2014-03-11T05:24:38.000Z" itemprop="datePublished">Mar 11 2014</time>
+    Updated:<time datetime="2014-03-11T05:26:43.000Z" itemprop="dateModified">Mar 11 2014</time>
     
   </p>
 </header>
@@ -123,7 +118,9 @@
 		
 		</div>
 		
-		<figure class="highlight C"><figcaption><span>自己动手写getline函数 </span></figcaption><table><tr><td class="gutter"><pre>1
+		<p>tmpnam函数，创建一个临时文件。
+编译器已经不建议使用该函数，而是使用mkstemp。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
 2
 3
 4
@@ -156,54 +153,40 @@
 31
 32
 33
-34
-35
-36
-37
-38
-</pre></td><td class="code"><pre><span class="comment">//Nero</span>
-<span class="comment">//2014-2-27</span>
-<span class="comment">//geline Practice in KnR</span>
-<span class="preprocessor">#include &lt;stdio.h&gt;</span>
-<span class="preprocessor">#include&lt;assert.h&gt;</span>
-<span class="preprocessor">#define MAXLINE 10000</span>
+</pre></td><td class="code"><pre><span class="comment">#include&lt;stdlib.h&gt;</span>
+<span class="comment">#include&lt;stdio.h&gt;</span>
+<span class="comment">#include&lt;assert.h&gt;</span>
+int main()
+{ 
+	char name[30];
+	int i_re = tmpnam(name);
+	assert(i_re != -1);
+	printf(<span class="string">"Temporary name : %s\n"</span>,name);
+	FILE * pfile;
+	pfile = fopen(name,<span class="string">"w"</span>);
+	assert(pfile != NULL);
+	fputs(<span class="string">"tmpnum is not safe!It's strongly recommanded to use mkstemp instead!\n"</span>,pfile);
+	fputs(<span class="string">"This is the second line\n"</span>,pfile);
+	fputs(<span class="string">"This is the third line\n"</span>,pfile);
+	fclose(pfile);
 
-<span class="comment">//getline</span>
-<span class="keyword">int</span> GetLine(<span class="keyword">char</span> line[],<span class="keyword">int</span> maxline);
-
-<span class="keyword">int</span> main(<span class="keyword">void</span>)
-{
-    <span class="built_in">printf</span>(<span class="string">"Input the words you need\n"</span>);
-    <span class="keyword">char</span> line[MAXLINE];
-    <span class="keyword">int</span> len = GetLine(line,MAXLINE);
-    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,line);
-    <span class="built_in">printf</span>(<span class="string">"The length of the input is %d\n"</span>,len);
-    <span class="keyword">return</span> <span class="number">0</span>;
-}
-
-<span class="keyword">int</span> GetLine(<span class="keyword">char</span> line[],<span class="keyword">int</span> maxline)
-{
-    assert(line != NULL &amp;&amp; maxline &lt;= MAXLINE &amp;&amp; maxline &gt;<span class="number">0</span>);
-    <span class="keyword">char</span> c;
-    <span class="keyword">int</span> i;
-    <span class="comment">//Atention Here.Don't use getchar twice in for loop.</span>
-    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;  maxline-<span class="number">1</span> &amp;&amp; (c=getchar())!= EOF &amp;&amp; c!= <span class="string">'\n'</span>; ++i)
-    {
-        line[i] = c;
-    }
-    <span class="keyword">if</span>(c ==<span class="string">'\n'</span>)
-    {
-        line[i] = c;
-        ++i;
-    }
-    line[i] = <span class="string">'\0'</span>;
-    <span class="keyword">return</span> i;
+	FILE *pfile_get;
+	int c;
+	int n = 0;
+	char mystring[150];
+	pfile_get = fopen(name,<span class="string">"r"</span>);
+	assert(pfile_get != NULL);
+	while(!feof(pfile_get))
+	{
+		if(fgets(mystring,100,pfile_get) != NULL)
+		{	
+			puts(mystring);
+		}
+	}
+	fclose(pfile_get);
+	return 0;
 }
 </pre></td></tr></table></figure>
-
-<p>为什么最后输出的内容多了空行而且是八个字符呢？</br>
-首先注意for循环处，最多只能到maxline-2的位置，因为&#39;\n&#39;换行符是要占一个位置的，并且还有结束符号&#39;\0&#39;，所以必须两个位置。</br>
-int getchar();函数从缓冲区里面读取stdin的字符流，最后输入的&#39;\n&#39;自然也会读取到，比如说这里输入hello,最后被录入char[]里面的是：“hello\n\0”。而&#39;\n&#39;算一个字符，&#39;\0&#39;不会被记入总长，所以总长总是要多一个位。</br></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -218,7 +201,7 @@ int getchar();函数从缓冲区里面读取stdin的字符流，最后输入的&
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/02/27/simple-test-3/" data-title="自己动手写getline函数 | NeroHwang" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/03/11/simple-test-7/" data-title="tmpnam临时文件读写操作 | NeroHwang" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -227,19 +210,11 @@ int getchar();函数从缓冲区里面读取stdin的字符流，最后输入的&
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/02/27/simple-test-4/" title="把较长的输入行折叠成若干个较短的行">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  把较长的输入行折叠成若干个较短的行</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/02/19/simple-test-2/"  title="找出字符串中出现频率最小的字母，并将其去除">
+<a href="/2014/03/10/simple-test-6/"  title="2014年2月20日嵌入式C面试小记">
  <strong>NEXT:</strong><br/> 
- <span>找出字符串中出现频率最小的字母，并将其去除
+ <span>2014年2月20日嵌入式C面试小记
 </span>
 </a>
 </div>
