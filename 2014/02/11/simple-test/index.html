@@ -74,7 +74,7 @@
     </p>
   <p class="article-time">
     <time datetime="2014-02-11T12:40:49.000Z" itemprop="datePublished">Feb 11 2014</time>
-    Updated:<time datetime="2014-02-27T02:43:24.000Z" itemprop="dateModified">Feb 27 2014</time>
+    Updated:<time datetime="2014-03-14T01:32:49.000Z" itemprop="dateModified">Mar 14 2014</time>
     
   </p>
 </header>
@@ -190,7 +190,19 @@ git <span class="keyword">push</span> -u origin master
 <figure class="highlight"><figcaption><span>推送配置</span></figcaption><table><tr><td class="gutter"><pre>1
 2
 3
-</pre></td><td class="code"><pre><span class="label">deploy:</span>
+4
+5
+6
+7
+8
+9
+</pre></td><td class="code"><pre><span class="preprocessor"># URL</span>
+<span class="preprocessor">## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'</span>
+<span class="label">url:</span> https://github<span class="preprocessor">.com</span>/账户名/账户名<span class="preprocessor">.github</span><span class="preprocessor">.com</span><span class="preprocessor">.git</span>
+<span class="label">root:</span> /
+
+
+<span class="label">deploy:</span>
   type: github
   repository: https://github<span class="preprocessor">.com</span>/你的账户名/你的账户名<span class="preprocessor">.github</span><span class="preprocessor">.com</span><span class="preprocessor">.git</span>
 </pre></td></tr></table></figure>
@@ -226,6 +238,14 @@ hexo deploy
 <p><h1 id="other">四、其他的一些问题</h1>  <a href="#top">回顶部</a><br/>
 如果你在用git进行连接和推送的时候出了问题的话，可能是因为没有指定ssh造成的，这一个问题，直接给出官网的帮助演示，讲解得非常详细：<br/>
 <a href="https://help.github.com/articles/generating-ssh-keys" target="_blank">https://help.github.com/articles/generating-ssh-keys</a></p>
+<p>另外，在本地设置git基础信息的方式为：</p>
+<figure class="highlight"><figcaption><span>基本信息</span></figcaption><table><tr><td class="gutter"><pre>1
+2
+</pre></td><td class="code"><pre>git config --<span class="keyword">global</span> user.name yourName
+git config --<span class="keyword">global</span> user.email yourEmail<span class="decorator">@XXX.com</span>
+</pre></td></tr></table></figure>
+
+
 <p>有什么问题请来博客园讨论交流：
 <a href="http://www.cnblogs.com/nerohwang/" target="_blank">http://www.cnblogs.com/nerohwang/</a></p>
   
