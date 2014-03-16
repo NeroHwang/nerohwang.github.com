@@ -4,33 +4,31 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>simple test | NeroHwang</title>
+    <title>mutex初探 | NeroHwang</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="NeroHwang">
     
-    <meta name="description" content="这只是一个简单的测试
-标题测试
-
-一个列表测试
-列表的一个子项
-
-
-无序列表的另一个项
-
-
-有序项目
-有序项目的一个子项，注意保持空格
-
-
-
-
-有序列表中的另一个项
-特别强调
-加重强调
-加重及斜文强调
-反引号框起来的内容标题1
-cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
+    <meta name="description" content="需要用到pthread_mutex_t类型数据，来自头文件，以及函数pthread_mutex_init()、pthread_mutex_lock()和pthread_mutex_unlock()，来自头文件
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+">
     
     
     
@@ -84,15 +82,15 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/02/02/simple-test/" title="simple test" itemprop="url">simple test</a>
+      <a href="/2014/03/16/simple-test-9/" title="mutex初探" itemprop="url">mutex初探</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/NeroHwang/nerohwang.github.com.git" title="NeroHwang">NeroHwang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-02-02T03:02:42.000Z" itemprop="datePublished">Feb 2 2014</time>
-    Updated:<time datetime="2014-02-11T12:07:53.000Z" itemprop="dateModified">Feb 11 2014</time>
+    <time datetime="2014-03-16T08:21:31.000Z" itemprop="datePublished">Mar 16 2014</time>
+    Updated:<time datetime="2014-03-16T08:31:59.000Z" itemprop="dateModified">Mar 16 2014</time>
     
   </p>
 </header>
@@ -101,59 +99,192 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#-br-"><span class="toc-number">1.</span> <span class="toc-text">一级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.</span> <span class="toc-text">二级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">四级标题<br/></span></a></li></ol></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#-"><span class="toc-number">1.2.</span> <span class="toc-text"></strong></span></a></li></ol>
+		
 		</div>
 		
-		<p>这只是一个简单的测试</p>
-<p><h2>标题测试</h2></p>
-<ul>
-<li>一个列表测试<ul>
-<li>列表的一个子项<br/></li>
-</ul>
-</li>
-<li>无序列表的另一个项</li>
-</ul>
-<ol>
-<li>有序项目<ul>
-<li>有序项目的一个子项，注意保持空格</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>有序列表中的另一个项
-<em>特别强调</em><br/>
-<strong>加重强调</strong><br/>
-<strong><em>加重及斜文强调</em></strong><br/>
-<code>反引号框起来的内容</code><br/><figure class="highlight"><figcaption><span>标题</span></figcaption><table><tr><td class="gutter"><pre>1
-</pre></td><td class="code"><pre><span class="built_in">cout</span>&lt;&lt;<span class="string">"Hello world"</span>&lt;&lt;endl;
-</pre></td></tr></table></figure>
+		<p>需要用到pthread_mutex_t类型数据，来自头文件<sys/types.h>，以及函数pthread_mutex_init()、pthread_mutex_lock()和pthread_mutex_unlock()，来自头文件<pthread.h></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+</pre></td><td class="code"><pre><span class="preprocessor">#include&lt;stdio.h&gt;</span>
+<span class="preprocessor">#include&lt;stdlib.h&gt;</span>
+<span class="preprocessor">#include&lt;pthread.h&gt;</span>
+<span class="preprocessor">#include&lt;string.h&gt;</span>
+<span class="preprocessor">#include&lt;assert.h&gt;</span>
+<span class="preprocessor">#include&lt;sys/types.h&gt;</span>
+<span class="preprocessor">#include&lt;unistd.h&gt;</span>
+<span class="keyword">int</span> num=<span class="number">10</span>;
+pthread_mutex_t mutex_t;
+<span class="keyword">void</span> thread(<span class="keyword">void</span>)
+{
+	<span class="keyword">int</span> j;
+	<span class="keyword">for</span>(j=<span class="number">0</span>; j &lt;<span class="number">3</span> ; j++)
+	{
+		<span class="built_in">printf</span>(<span class="string">"This is the sub thread\n"</span>);
+		<span class="built_in">printf</span>(<span class="string">"The length of \"test\" is %d\n"</span>,<span class="built_in">strlen</span>(<span class="string">"test"</span>));
+	}
+}
 
-</li>
-</ul>
-<h1 id="-br-">一级标题<br/></h1>
-<h2 id="-br-">二级标题<br/></h2>
-<h4 id="-br-">四级标题<br/></h4>
-<p>下面演示一下分割线</p>
-<h2 id="-"><strong><strong><strong><strong><strong><strong><strong><strong><em>**</em></strong></strong></strong></strong></strong></strong></strong></strong></h2>
-<p><blockquote><p>这是一个正常的引用写法</p></blockquote></p>
-<blockquote>
-<p>引用的测试<br/></p>
-<blockquote>
-<p>这是一个引用的嵌套<br/>
-<a href="http://www.baidu.com" target="_blank">这是一个链接的演示，比如说百度</a><br/>
-测试</p>
-</blockquote>
-</blockquote>
+<span class="keyword">void</span> Read_func(<span class="keyword">void</span>);
+<span class="keyword">void</span> Write_func_add(<span class="keyword">void</span>);
+<span class="keyword">void</span> Write_func_sub(<span class="keyword">void</span>);
+
+<span class="keyword">int</span> main()
+{
+	pthread_t id_pthread;
+	<span class="keyword">int</span> i,ret;
+	ret = pthread_create(&amp;id_pthread,NULL,(<span class="keyword">void</span> *)thread,NULL);
+	assert(ret == <span class="number">0</span>);       <span class="comment">//0 means correct</span>
+	<span class="keyword">for</span>(i=<span class="number">0</span>; i&lt;<span class="number">3</span>; i++)
+	{
+		<span class="built_in">printf</span>(<span class="string">"This is the main thread\n"</span>);
+		<span class="built_in">printf</span>(<span class="string">"The length of \" test1 \" is %d\n"</span>,<span class="built_in">strlen</span>(<span class="string">"test1"</span>));
+	}
+	pthread_join(id_pthread,NULL);
+
+	<span class="comment">/*mutex lock test, with function Read_func() and Write_func()*/</span>
+	<span class="comment">//Init the mutex with the default attr</span>
+	pthread_t num_add;
+	pthread_t num_read;
+	pthread_t num_sub;
+	pthread_mutex_init(&amp;mutex_t,NULL);
+	<span class="keyword">while</span>(num &gt; <span class="number">5</span> &amp;&amp; num &lt;<span class="number">15</span>)
+	{
+		pthread_create(&amp;num_add,NULL,(<span class="keyword">void</span>*)(&amp;Write_func_add),NULL);
+		pthread_create(&amp;num_read,NULL,(<span class="keyword">void</span>*)(&amp;Read_func),NULL);
+		pthread_create(&amp;num_sub,NULL,(<span class="keyword">void</span>*)(&amp;Write_func_sub),NULL);
+		pthread_join(num_read,NULL);
+		pthread_join(num_sub,NULL);
+		pthread_join(num_add,NULL);
+	}
+	<span class="keyword">return</span> <span class="number">0</span>;
+}
+
+<span class="keyword">void</span> Read_func(<span class="keyword">void</span>)
+{
+		pthread_mutex_lock(&amp;mutex_t);
+		<span class="built_in">printf</span>(<span class="string">"Read func: now the num is: %d\n"</span>,num);
+		pthread_mutex_unlock(&amp;mutex_t);
+		<span class="built_in">printf</span>(<span class="string">"This is the read func\n"</span>);
+
+}
+
+<span class="keyword">void</span> Write_func_add(<span class="keyword">void</span>)
+{
+		pthread_mutex_lock(&amp;mutex_t);
+		<span class="built_in">printf</span>(<span class="string">"Add func: now the num is: %d\n"</span>,(++num));
+		pthread_mutex_unlock(&amp;mutex_t);
+		<span class="built_in">printf</span>(<span class="string">"This is the Write_func_add\n"</span>);
+}
+
+<span class="keyword">void</span> Write_func_sub(<span class="keyword">void</span>)
+{
+		pthread_mutex_lock(&amp;mutex_t);
+		<span class="built_in">printf</span>(<span class="string">"Sub func: now the num is: %d\n"</span>,(--num));
+		pthread_mutex_unlock(&amp;mutex_t);
+		<span class="built_in">printf</span>(<span class="string">"This is the Write_func_sub\n"</span>);
+}
+
+{% endcodeblock % }
+运行结果：
+![img](\img\<span class="number">20140316.</span>png)
+可见在没有被mutex限制的部分，线程中的有些内容还没执行完就已经被其它线程抢占资源，但是mutex锁内的内容是不被抢占的。
+</pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/C/">C</a>
+  </div>
 
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/02/02/simple-test/" data-title="simple test | NeroHwang" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/03/16/simple-test-9/" data-title="mutex初探 | NeroHwang" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -162,14 +293,14 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/02/11/simple-test/" title="用hexo在github上搭建自己的静态博客">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  用hexo在github上搭建自己的静态博客</span>
+
+<div class="next">
+<a href="/2014/03/11/simple-test-8/"  title="memXXX函数">
+ <strong>NEXT:</strong><br/> 
+ <span>memXXX函数
+</span>
 </a>
 </div>
-
 
 </nav>
 
@@ -183,7 +314,7 @@ cout&lt;&lt;&quot;Hello world&quot;&lt;&lt;end">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#-br-"><span class="toc-number">1.</span> <span class="toc-text">一级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.</span> <span class="toc-text">二级标题<br/></span></a></li><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#-br-"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">四级标题<br/></span></a></li></ol></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#-"><span class="toc-number">1.2.</span> <span class="toc-text"></strong></span></a></li></ol>
+  
   </div>
 
 <div id="asidepart">
