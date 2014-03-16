@@ -90,7 +90,7 @@
     </p>
   <p class="article-time">
     <time datetime="2014-03-16T08:21:31.000Z" itemprop="datePublished">Mar 16 2014</time>
-    Updated:<time datetime="2014-03-16T08:31:59.000Z" itemprop="dateModified">Mar 16 2014</time>
+    Updated:<time datetime="2014-03-16T08:40:35.000Z" itemprop="dateModified">Mar 16 2014</time>
     
   </p>
 </header>
@@ -181,11 +181,6 @@
 76
 77
 78
-79
-80
-81
-82
-83
 </pre></td><td class="code"><pre><span class="preprocessor">#include&lt;stdio.h&gt;</span>
 <span class="preprocessor">#include&lt;stdlib.h&gt;</span>
 <span class="preprocessor">#include&lt;pthread.h&gt;</span>
@@ -264,12 +259,11 @@ pthread_mutex_t mutex_t;
 		pthread_mutex_unlock(&amp;mutex_t);
 		<span class="built_in">printf</span>(<span class="string">"This is the Write_func_sub\n"</span>);
 }
-
-{% endcodeblock % }
-运行结果：
-![img](\img\<span class="number">20140316.</span>png)
-可见在没有被mutex限制的部分，线程中的有些内容还没执行完就已经被其它线程抢占资源，但是mutex锁内的内容是不被抢占的。
 </pre></td></tr></table></figure>
+
+<p>运行结果：
+<img src="\img\20140316.png" alt="img">
+可见在没有被mutex限制的部分，线程中的有些内容还没执行完就已经被其它线程抢占资源，但是mutex锁内的内容是不被抢占的。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
