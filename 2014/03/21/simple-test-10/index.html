@@ -4,52 +4,15 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>自己动手写getline函数 | NeroHwang</title>
+    <title>Struct按多少位对齐 | NeroHwang</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="NeroHwang">
     
-    <meta name="description" content="自己动手写getline函数 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-//Nero
-//2014-2-27
-//geline Pr">
+    <meta name="description" content="struct name1{char str;short x;int num;}
+struct name2{char str;int num;short x;}
+sizeof(struct name1)=8,sizeof(struct name2)=12
+为什么会是这样的结果呢，因为两个结构体中的数据">
     
     
     
@@ -103,15 +66,15 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2014/02/27/simple-test-3/" title="自己动手写getline函数" itemprop="url">自己动手写getline函数</a>
+      <a href="/2014/03/21/simple-test-10/" title="Struct按多少位对齐" itemprop="url">Struct按多少位对齐</a>
   </h1>
   <p class="article-author">By
     
       <a href="https://github.com/NeroHwang/nerohwang.github.com.git" title="NeroHwang">NeroHwang</a>
     </p>
   <p class="article-time">
-    <time datetime="2014-02-27T01:33:10.000Z" itemprop="datePublished">Feb 27 2014</time>
-    Updated:<time datetime="2014-02-27T01:54:21.000Z" itemprop="dateModified">Feb 27 2014</time>
+    <time datetime="2014-03-21T02:10:30.000Z" itemprop="datePublished">Mar 21 2014</time>
+    Updated:<time datetime="2014-03-21T02:12:31.000Z" itemprop="dateModified">Mar 21 2014</time>
     
   </p>
 </header>
@@ -123,87 +86,15 @@
 		
 		</div>
 		
-		<figure class="highlight C"><figcaption><span>自己动手写getline函数 </span></figcaption><table><tr><td class="gutter"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-</pre></td><td class="code"><pre><span class="comment">//Nero</span>
-<span class="comment">//2014-2-27</span>
-<span class="comment">//geline Practice in KnR</span>
-<span class="preprocessor">#include &lt;stdio.h&gt;</span>
-<span class="preprocessor">#include&lt;assert.h&gt;</span>
-<span class="preprocessor">#define MAXLINE 10000</span>
-
-<span class="comment">//getline</span>
-<span class="keyword">int</span> GetLine(<span class="keyword">char</span> line[],<span class="keyword">int</span> maxline);
-
-<span class="keyword">int</span> main(<span class="keyword">void</span>)
-{
-    <span class="built_in">printf</span>(<span class="string">"Input the words you need\n"</span>);
-    <span class="keyword">char</span> line[MAXLINE];
-    <span class="keyword">int</span> len = GetLine(line,MAXLINE);
-    <span class="built_in">printf</span>(<span class="string">"%s\n"</span>,line);
-    <span class="built_in">printf</span>(<span class="string">"The length of the input is %d\n"</span>,len);
-    <span class="keyword">return</span> <span class="number">0</span>;
-}
-
-<span class="keyword">int</span> GetLine(<span class="keyword">char</span> line[],<span class="keyword">int</span> maxline)
-{
-    assert(line != NULL &amp;&amp; maxline &lt;= MAXLINE &amp;&amp; maxline &gt;<span class="number">0</span>);
-    <span class="keyword">char</span> c;
-    <span class="keyword">int</span> i;
-    <span class="comment">//Atention Here.Don't use getchar twice in for loop.</span>
-    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt;  maxline-<span class="number">1</span> &amp;&amp; (c=getchar())!= EOF &amp;&amp; c!= <span class="string">'\n'</span>; ++i)
-    {
-        line[i] = c;
-    }
-    <span class="keyword">if</span>(c ==<span class="string">'\n'</span>)
-    {
-        line[i] = c;
-        ++i;
-    }
-    line[i] = <span class="string">'\0'</span>;
-    <span class="keyword">return</span> i;
-}
-</pre></td></tr></table></figure>
-
-<p>为什么最后输出的内容多了空行而且是八个字符呢？</br>
-首先注意for循环处，最多只能到maxline-2的位置，因为&#39;\n&#39;换行符是要占一个位置的，并且还有结束符号&#39;\0&#39;，所以必须两个位置。</br>
-int getchar();函数从缓冲区里面读取stdin的字符流，最后输入的&#39;\n&#39;自然也会读取到，比如说这里输入hello,最后被录入char[]里面的是：“hello\n\0”。而&#39;\n&#39;算一个字符，&#39;\0&#39;不会被记入总长，所以总长总是要多一个位。</br></p>
+		<p>struct name1{char str;short x;int num;}
+struct name2{char str;int num;short x;}</p>
+<p>sizeof(struct name1)=8,sizeof(struct name2)=12</p>
+<p>为什么会是这样的结果呢，因为两个结构体中的数据成员都是按4个字节对齐的。
+比如，char型数据占1个字节，short型数据占2个字节，int型数据占4个字节。
+在结构体name1中，str和x占了前面的3个字节，不够4个字节，则直接空出一位空间来，然后int单独占4个字节，所以name1大小为8个字节。
+而在结构体name2中，str占了一个字节，占不满，而接下来的是int型数据num，则直接空出3个字节空间，num则独占4个字节，最后的x占2个字节，占不满，空出两个字节看作4个字节，所以name2大小总共是12个字节。</p>
+<p>实际上呢，它的对齐规则是根据当前结构体中占位最多的数据类型来确定的，比如在上述两个结构体中，最大的都是int为4位，所以按4位对齐。
+假设，如果有double型的数据的话，那么它们的对齐方式就是以8位对齐。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -218,7 +109,7 @@ int getchar();函数从缓冲区里面读取stdin的字符流，最后输入的&
 
 <div class="article-share" id="share">
 
-  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/02/27/simple-test-3/" data-title="自己动手写getline函数 | NeroHwang" data-tsina="null" class="share clearfix">
+  <div data-url="https://github.com/NeroHwang/nerohwang.github.com.git/2014/03/21/simple-test-10/" data-title="Struct按多少位对齐 | NeroHwang" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -227,19 +118,11 @@ int getchar();函数从缓冲区里面读取stdin的字符流，最后输入的&
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2014/02/27/simple-test-4/" title="把较长的输入行折叠成若干个较短的行">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  把较长的输入行折叠成若干个较短的行</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2014/02/19/simple-test-2/"  title="找出字符串中出现频率最小的字母，并将其去除">
+<a href="/2014/03/16/simple-test-9/"  title="mutex初探">
  <strong>NEXT:</strong><br/> 
- <span>找出字符串中出现频率最小的字母，并将其去除
+ <span>mutex初探
 </span>
 </a>
 </div>
